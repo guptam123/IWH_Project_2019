@@ -46,3 +46,12 @@ exports.show_posts = function (req , res) {
 exports.show_posts = function (req , res) {
     res.send('postman is working')
 };
+
+exports.search = function(req,res){
+    var searchitem = req.body.searchitem;
+    var keywords=searchitem.split(" ");
+    console.log(searchitem);
+    Post.find({tag:{$in: keywords} }, function (err, post) {
+        res.send(post);
+    });
+}
