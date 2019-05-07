@@ -36,6 +36,7 @@ exports.post_create = function (req, res) {
             return next(err);
         }
     })
+   // res.send('Create_Post route working!')
 };
 exports.show_posts = function (req , res) {
     Post.find({}).then(function (posts) {
