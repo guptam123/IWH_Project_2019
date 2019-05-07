@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Log = require('../models/log');
-
+const User=require('../models/user');
 
 exports.post_create = function (req, res) {
     let post1 = new Post(

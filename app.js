@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = require('./routes/routes');
-
+const bodyParser = require('body-parser');
 var app = express();
 app.get('/', (req, res) => {
     res.send('Hello Express')
@@ -18,8 +18,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 /*app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));*/
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', routes);
-
 //app.listen(process.env.PORT || 3000)
 
 let port = process.env.PORT || 1235;
