@@ -46,7 +46,6 @@ exports.show_posts = function (req , res) {
 exports.show_posts = function (req , res) {
     res.send('postman is working')
 };
-<<<<<<< HEAD
 
 exports.search = function(req,res){
     var searchitem = req.body.searchitem;
@@ -56,5 +55,3 @@ exports.search = function(req,res){
         res.send(post);
     });
 }
-=======
->>>>>>> a7cd9c17a09c2951a9323c8fde44e379de2128c2
