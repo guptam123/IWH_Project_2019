@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Log = require('../models/log');
-
+const User=require('../models/user');
 
 exports.post_create = function (req, res) {
     let post1 = new Post(
@@ -46,6 +46,7 @@ exports.show_posts = function (req , res) {
 exports.show_posts = function (req , res) {
     res.send('postman is working')
 };
+<<<<<<< HEAD
 
 exports.search = function(req,res){
     var searchitem = req.body.searchitem;
@@ -55,3 +56,5 @@ exports.search = function(req,res){
         res.send(post);
     });
 }
+=======
+>>>>>>> a7cd9c17a09c2951a9323c8fde44e379de2128c2
