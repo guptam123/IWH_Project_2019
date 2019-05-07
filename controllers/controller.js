@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const Log = require('../models/log');
 const User=require('../models/user');
+const Company=require('../models/company');
 
 exports.post_create = function (req, res) {
     let post1 = new Post(
@@ -47,11 +48,52 @@ exports.show_posts = function (req , res) {
     res.send('postman is working')
 };
 
-exports.search = function(req,res){
+//Direct searching of users
+exports.search_people = function(req,res){
     var searchitem = req.body.searchitem;
+    var keywords=searchitem.split(" ");
+    console.log(searchitem);
+    User.find({name:{$in: searchitem} }, function (err, user) {
+        res.send(user);
+    });
+};
+
+//company search implemented
+exports.search_company = function(req,res){
+    var searchitem = req.body.searchitem;
+    //var keywords=searchitem.split(" ");
+    console.log(searchitem);
+    Company.find({name:{$in: searchitem} },function(err,company) {
+        res.send(company);
+    });
+};
+
+//searching posts containing given tag
+exports.search_post = function (req , res) {
+    var searchitem=req.body.searchitem;
     var keywords=searchitem.split(" ");
     console.log(searchitem);
     Post.find({tag:{$in: keywords} }, function (err, post) {
         res.send(post);
     });
-}
+
+};
+
+//can search globally i.e. finding a user, company, post tag containing a keyword
+//NOT COMPLETED YET!! 
+exports.global_search = function (req , res) {
+    var searchitem=req.body.searchitem;
+    var keywords=searchitem.split(" ");
+    console.log(searchitem);
+    var data=[];
+    Post.find({tag:{$in: keywords} }, function (err, post) {
+        data.push(post);
+    });
+    Company.find({name:{$in: keywords} },function(err, company) {
+        data.push(company);
+    });
+    User.find({name:{$in: keywords} }, function (err, user) {
+        data.push(user);
+    });
+    res.json(data);
+};
