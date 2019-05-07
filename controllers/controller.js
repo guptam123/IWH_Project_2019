@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Log = require('../models/log');
-
+const Comment = require('../models/comment');
 
 exports.post_create = function (req, res) {
     let post1 = new Post(
@@ -46,3 +46,43 @@ exports.show_posts = function (req , res) {
 exports.show_posts = function (req , res) {
     res.send('postman is working')
 };
+
+//delete post by user
+exports.deletepost_user = function (req , res) {
+    var x=req.params.uid;
+    var aid=req.params.aid;
+    Post.deleteOne({_id:aid,userid:x} , function (err, post) {
+        res.send(aid+" deleted");
+
+    });
+
+};
+
+//add comment
+exports.add_comment = function (req, res) {
+    let comment = new Comment(
+        {
+            articleid: req.params.id,
+            comment: req.body.comment,
+            user: req.body.user
+        }
+    );
+    comment.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.send('comment added successfully')
+    });
+    var logItem=req.body.user + " Commented on " + req.params.id;
+    let log = new Log(
+        {
+            item:logItem
+        });
+    log.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+    })
+
+};
+
