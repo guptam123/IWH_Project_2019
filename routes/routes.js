@@ -12,26 +12,17 @@ router.get('/about', function (req, res) {
 //post API
 
 router.post('/post_create/',controller.post_create);
-
 //router.post('/:id/add_comment', controller.add_comment);
-
-router.post('/user_profile_updation/', userProfileController.user_profile_updation);
-
-
 
 //get API
 
 router.get('/show_posts', controller.show_posts);
-
 //router.get('/:uid/:aid/deletepost_user', controller.deletepost_user);
 
-router.get('/search/people',controller.search_people);
 
-router.get('/search/company',controller.search_company);
-
-router.get('/search/post',controller.search_post);
-
-router.get('/search/global_search',controller.global_search);
-
-
+router.post('/:uid/update_add_skill/', userProfileController.update_add_skill);
+router.post('/:uid/update_delete_skill/', userProfileController.update_delete_skill);
+router.post('/:uid/add_qualification/', userProfileController.add_qualification);
+router.post('/:uid/working_hour_start/', userProfileController.update_working_hour_start);
+router.post('/:uid/working_hour_end/', userProfileController.update_working_hour_end);
 module.exports = router;

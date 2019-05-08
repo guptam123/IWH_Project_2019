@@ -1,12 +1,45 @@
 const mongoose = require('mongoose');
+var bcrypt = require('bcryptjs');
 
 const CompanySchema = new mongoose.Schema({
+    type:{type:Number,default:2},
     name: String,
     city: String,
     country:String,
+    email:String,
+    password:String,
+    domains:{type:Array},
     website:String,
-    //The description of company
-    about: String
+    fbpagelink:String,
+    posts:{type:Array},//post ids created by the user will be stored in this array
+    about: String//The description of company
+
 });
 
-module.exports = mongoose.model("Company", CompanySchema);
+var Company=module.exports = mongoose.model("Company", CompanySchema);
+
+
+
+module.exports.getCompanyById = function(id, callback){
+    Company.findById(id, callback);
+}
+
+module.exports.getCompanyByEmail = function(email, callback){
+    var query = {email: email};
+    Company.findOne(query, callback);
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callback){
+    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+        callback(null, isMatch);
+    });
+}
+
+module.exports.createCompany = function(newUser, callback){
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(newUser.password, salt, function(err, hash) {
+            newUser.password = hash;
+            newUser.save(callback);
+        });
+    });
+}
