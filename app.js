@@ -26,8 +26,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({extended: false}));*/
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+//Routes
 app.use('/api', routes);
-//app.listen(process.env.PORT || 3000)
+//user_register route
+app.use('/user_register',routes1);
 
 //Using Session
 app.use(session({
@@ -60,10 +63,6 @@ app.use(expressValidator({
 //Cookie
 app.use(cookieParser());
 
-
-
-//user_register route
-app.use('/user_register',routes1);
 
 
 
