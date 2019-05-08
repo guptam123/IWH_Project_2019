@@ -12,8 +12,6 @@ router.get('/about', function (req, res) {
 /////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to posts
 router.post('/:id/:type/post_create/',controller.post_create);
-router.post('/:id/add_comment', controller.add_comment);
-router.get('/:aid/upvotepost', controller.upvotepost);
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //search API endpoints
