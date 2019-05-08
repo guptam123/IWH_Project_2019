@@ -44,10 +44,10 @@ exports.show_posts = function (req , res) {
         res.send(posts);
     });
 };
-exports.show_posts = function (req , res) {
+/*exports.show_posts = function (req , res) {
     res.send('postman is working')
 };
-
+*/
 //Direct searching of users
 exports.search_people = function(req,res){
     var searchitem = req.body.searchitem;
@@ -97,3 +97,4 @@ exports.global_search = function (req , res) {
     });
     res.json(data);
 };
+
