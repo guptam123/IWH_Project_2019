@@ -11,6 +11,7 @@ const CompanySchema = new mongoose.Schema({
     domains:{type:Array},
     website:String,
     fbpagelink:String,
+    following:{type:Array},//_ids of other users/companies/orgs followed by the user
     posts:{type:Array},//post ids created by the user will be stored in this array
     about: String//The description of company
 

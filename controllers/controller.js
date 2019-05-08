@@ -33,23 +33,7 @@ exports.post_create = function (req, res) {//call the same api for creating work
         }
         res.send('post Created successfully')
     });
-   /* var logItem=req.body.username + " created a new post";
-    let log = new Log(
-        {
-            item:logItem
-        });
-    log.save(function (err) {
-        if (err) {
-            return next(err);
-        }
-    })*/
-   // res.send('Create_Post route working!')
 
-    /*var postid=post1._id;
-    Post.find({content:req.body.content , madeby:id}).then(function (post) {
-       // res.send(posts);
-        postid=post._id;
-    });*/
     console.log(post1._id);
     if(type==1)
     {User.updateOne({_id:id},{$push:{posts:post1._id}},function (err,user) {});}
@@ -57,6 +41,17 @@ exports.post_create = function (req, res) {//call the same api for creating work
     {Company.updateOne({_id:id},{$push:{posts:post1._id}},function (err,user) {});}
 
 
+};
+
+exports.follow = function (req , res) {
+    var id1=req.params.id1;
+    var id2=req.params.id2;
+    var type=req.params.type;
+    if(type==1)
+    {User.updateOne({_id:id1},{$push:{following:id2}},function (err,user) {});}
+    else if(type==2)
+    {Company.updateOne({_id:id1},{$push:{following:id2}},function (err,user) {});}
+    res.send(id1+" is following "+id2);
 };
 
 
