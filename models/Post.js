@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
-    title: String,
+
     content: String,
-    username: String,
-    userid: {type:Number, default: -1},
+    madeby: String,//_id of the creator
     upvote: {type:Number, default: 0 },
     tag:{type:Array},
-    flag:{type:Boolean ,default:0},
+    time:String,
+    date:String,
+    //flag:{type:Boolean ,default:0},
     uploadfile:String
 });
 

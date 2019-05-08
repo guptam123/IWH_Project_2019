@@ -9,10 +9,12 @@ router.get('/about', function (req, res) {
     res.send('Welocme to ABC');
   });
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+//API endpoints related to posts
+router.post('/:id/:type/post_create/',controller.post_create);
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //search API endpoints
-router.post('/post_create/',controller.post_create);
 router.post('/search/people',controller.search_people);
 router.post('/search/company',controller.search_company);
 router.post('/search/post',controller.search_post);
