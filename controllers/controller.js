@@ -2,6 +2,7 @@ const Post = require('../models/post');
 //const Log = require('../models/log');
 const User=require('../models/user');
 const Company=require('../models/company');
+const Comment = require('../models/comment');
 
 exports.post_create = function (req, res) {//call the same api for creating work experiences.
     if(req.file)
@@ -129,7 +130,8 @@ exports.add_comment = function (req, res) {
         if (err) {
             return next(err);
         }
-        res.send('comment added successfully')
+        console.log('comment added successfully');
+        res.send(comment);
     });
     // var logItem=req.body.user + " Commented on " + req.params.id;
     // let log = new Log(
