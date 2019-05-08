@@ -1,72 +1,127 @@
-const Post = require('../models/post');
+//const Post = require('../models/post');
 const User=require('../models/user');
-/*exports.user_profile_updation = function (req, res) {
-    let userdata= new User(
-        {
-            name: req.body.name,
-            age: req.body.age,
-            city: req.body.city,
-            country: req.body.country,
-            number: req.body.number,
-            mailId: req.body.mailId,
-            Qualification1: req.body.Qualification1,
-            Qualification2: req.body.Qualification2,
-            Qualification3: req.body.Qualification3,
 
-        }
-    );
-    var skillsString=req.body.skills;
-    var skills= skillsString.split(",");
-    for(var i=0;i<skills.length;i++)
-    {
-        //console.log(skills[i]+"\n");
-        userdata.skills.push(skills[i]);
-    }
-    userdata.save(function (err) {
-        if (err) {
-            return next(err);
-        }
-        res.send('User profile updated successfully')
-    });
-  }*/
+
+///////to edit everything//////
+//////////////////////////////////////////////////////////////////////////
+
+//add a skill
   exports.update_add_skill= function (req , res) {
     var x=req.params.uid;
     var skill=req.body.skill;
 
-    User.updateOne({_id:uid},{$push:{skills:skill}},function (err,user) {
-        res.send("Skill added");
+    User.updateOne({_id:x},{$push:{skills:skill}},function (err,user) {
+        res.send(skill + " added to Skills");
     });
 };
+
+//delete a skill
 exports.update_delete_skill= function (req , res) {
   var x=req.params.uid;
   var skill=req.body.skill;
 
   User.updateOne({_id:x},{$pull:{skills:skill}},function (err,user) {
-      res.send("skill deleted");
+      res.send(skill + " deleted from Skills");
   });
 };
+
+//add a qualification
 exports.add_qualification= function (req , res) {//call ths api for qualification2 and qualification3 as well
   var x=req.params.uid;
-  var quali=req.body.quali;
+  var quali=req.body.qualification;
 
-  User.updateOne({_id:x},{$set:{qualification1:quali}},function (err,user) {
-      res.send("Qualification added");
+  User.updateOne({_id:x},{$push:{qualifications:quali}},function (err,user) {
+      res.send(quali+" added to Qualifications");
   });
 };
+//delete a qualification
+exports.delete_qualification= function (req , res) {
+  var x=req.params.uid;
+  var quali=req.body.qualification;
+
+  User.updateOne({_id:x},{$pull:{qualifications:quali}},function (err,user) {
+    res.send(quali+" deleted from Qualifications");
+  });
+};
+
+//edit/update working_hour_end
 exports.update_working_hour_start= function (req , res) {
   var x=req.params.uid;
-  var wh=req.body.wh;
+  var starting_hour=req.body.starting_hour;
 
-  User.updateOne({_id:x},{$set:{working_hour_start:wh}},function (err,user) {
-      res.send("Updated working hour start");
+  User.updateOne({_id:x},{$set:{working_hour_start:starting_hour}},function (err,user) {
+      res.send("available from"+starting_hour);
   });
 };
+//edit/update working_hour_end
 exports.update_working_hour_end= function (req , res) {
   var x=req.params.uid;
-  var wh=req.body.wh;
+  var ending_hour=req.body.ending_hour;
 
-  User.updateOne({_id:x},{$set:{working_hour_end:wh}},function (err,user) {
-      res.send("Updated working hour end");
+  User.updateOne({_id:x},{$set:{working_hour_end:ending_hour}},function (err,user) {
+      res.send("available till "+ending_hour);
   });
 };
+//edit age
+exports.update_age= function (req , res) {
+  var x=req.params.uid;
+  var age=req.body.age;
+
+  User.updateOne({_id:x},{$set:{age:age}},function (err,user) {
+    res.send("age changed to"+age);
+  });
+};
+
+//edit city
+exports.update_city= function (req , res) {
+  var x=req.params.uid;
+  var city=req.body.city;
+
+  User.updateOne({_id:x},{$set:{city:city}},function (err,user) {
+    res.send("city changed to"+city);
+  });
+};
+
+//edit country
+exports.update_country= function (req , res) {
+  var x=req.params.uid;
+  var country=req.body.country;
+
+  User.updateOne({_id:x},{$set:{country:country}},function (err,user) {
+    res.send("country changed to"+country);
+  });
+};
+
+//update/edit phone number
+exports.update_phoneNumber= function (req , res) {
+  var x=req.params.uid;
+  var phone=req.body.phone_number;
+
+  User.updateOne({_id:x},{$set:{phone:phone}},function (err,user) {
+    res.send("phone number changed to"+phone);
+  });
+};
+
+//update/edit name
+exports.update_name= function (req , res) {
+  var x=req.params.uid;
+  var name=req.body.name;
+
+  User.updateOne({_id:x},{$set:{name:name}},function (err,user) {
+    res.send("name changed to"+name);
+  });
+};
+
+//update/edit email
+exports.update_email= function (req , res) {
+  var x=req.params.uid;
+  var email=req.body.email;
+
+  User.updateOne({_id:x},{$set:{email:email}},function (err,user) {
+    res.send("email id changed to "+email);
+  });
+};
+
+/////////////////////////////////////////////////////////////////////////
+//write other APIs below
 //hire button api shows contact detail for that user.
