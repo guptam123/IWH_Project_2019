@@ -116,3 +116,49 @@ exports.global_search = function (req , res) {
     res.send(data1,data2,data3);
 };
 
+/////////////////////////////////////////////Add Comment API//////////////////////////////////////////////////////////
+exports.add_comment = function (req, res) {
+    let comment = new Comment(
+        {
+            articleid: req.params.id,
+            comment: req.body.comment,
+            user: req.body.user
+        }
+    );
+    comment.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.send('comment added successfully')
+    });
+    // var logItem=req.body.user + " Commented on " + req.params.id;
+    // let log = new Log(
+    //     {
+    //         item:logItem
+    //     });
+    // log.save(function (err) {
+    //     if (err) {
+    //         return next(err);
+    //     }
+    // })
+
+};
+
+////////////////////////////////////////////////////Upvote API///////////////////////////////////////////////////////
+exports.upvotepost = function (req , res) {
+    var aid=req.params.aid;
+    //var eid=req.params.eid;
+    Post.findById({_id:aid.toString()}, function(err,post)
+    {
+        Post.updateOne({_id:aid.toString()},{$set:{upvote:post.upvote+1}}, function(err, res)
+        {console.log("upvote post done");});
+
+    });
+    //res.send("Upvote  Done!");
+    Post.findById(req.params.aid, function(err,post)
+    {
+        post.upvote++;
+        res.send(post);
+    });
+
+};
