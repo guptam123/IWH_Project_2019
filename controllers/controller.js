@@ -88,16 +88,18 @@ exports.global_search = function (req , res) {
     var searchitem=req.body.searchitem;
     var keywords=searchitem.split(" ");
     console.log(searchitem);
-    var data=[];
+    let data1=[];
+    let data2=[];
+    let data3=[];
     Post.find({tag:{$in: keywords} }, function (err, post) {
-        data.push(post);
+        data1.push(post);
     });
     Company.find({name:{$in: keywords} },function(err, company) {
-        data.push(company);
+        data2.push(company);
     });
     User.find({name:{$in: keywords} }, function (err, user) {
-        data.push(user);
+        data3.push(user);
     });
-    res.json(data);
+    res.send(data1,data2,data3);
 };
 

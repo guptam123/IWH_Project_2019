@@ -12,6 +12,10 @@ router.get('/about', function (req, res) {
 //post API
 
 router.post('/post_create/',controller.post_create);
+router.post('/search/people',controller.search_people);
+router.post('/search/company',controller.search_company);
+router.post('/search/post',controller.search_post);
+router.post('/search/global_search',controller.global_search)
 //router.post('/:id/add_comment', controller.add_comment);
 
 //get API
