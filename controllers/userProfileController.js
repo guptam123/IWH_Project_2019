@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const User=require('../models/user');
-exports.user_profile_updation = function (req, res) {
+/*exports.user_profile_updation = function (req, res) {
     let userdata= new User(
         {
             name: req.body.name,
@@ -28,4 +28,45 @@ exports.user_profile_updation = function (req, res) {
         }
         res.send('User profile updated successfully')
     });
-  }
+  }*/
+  exports.update_add_skill= function (req , res) {
+    var x=req.params.uid;
+    var skill=req.body.skill;
+
+    User.updateOne({_id:uid},{$push:{skills:skill}},function (err,user) {
+        res.send("Skill added");
+    });
+};
+exports.update_delete_skill= function (req , res) {
+  var x=req.params.uid;
+  var skill=req.body.skill;
+
+  User.updateOne({_id:x},{$pull:{skills:skill}},function (err,user) {
+      res.send("skill deleted");
+  });
+};
+exports.add_qualification= function (req , res) {//call ths api for qualification2 and qualification3 as well
+  var x=req.params.uid;
+  var quali=req.body.quali;
+
+  User.updateOne({_id:x},{$set:{qualification1:quali}},function (err,user) {
+      res.send("Qualification added");
+  });
+};
+exports.update_working_hour_start= function (req , res) {
+  var x=req.params.uid;
+  var wh=req.body.wh;
+
+  User.updateOne({_id:x},{$set:{working_hour_start:wh}},function (err,user) {
+      res.send("Updated working hour start");
+  });
+};
+exports.update_working_hour_end= function (req , res) {
+  var x=req.params.uid;
+  var wh=req.body.wh;
+
+  User.updateOne({_id:x},{$set:{working_hour_end:wh}},function (err,user) {
+      res.send("Updated working hour end");
+  });
+};
+//hire button api shows contact detail for that user.

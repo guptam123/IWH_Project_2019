@@ -2,7 +2,7 @@ const Post = require('../models/post');
 const Log = require('../models/log');
 const User=require('../models/user');
 
-exports.post_create = function (req, res) {
+exports.post_create = function (req, res) {//call the same api for creating work experiences.
     let post1 = new Post(
         {
             title: req.body.title,
@@ -37,6 +37,9 @@ exports.post_create = function (req, res) {
         }
     })
    // res.send('Create_Post route working!')
+   User.updateOne({name:req.body.username},{$push:{posts:req.body.id}},function (err,user) {
+       
+   });//in user collection,posts array is storing the id of the post created by that username
 };
 exports.show_posts = function (req , res) {
     Post.find({}).then(function (posts) {

@@ -14,7 +14,9 @@ const UserSchema = new mongoose.Schema({
     Qualification2:String,//12th
     Qualification3:String,//any further qualification
     posts:{type:Array},//post ids created by the user will be stored in this array
-    experiences:{type:Array}//create post api will be used for this too.
+    experiences:{type:Array},//create post api will be used for this too.
+    working_hour_start:{type:Number},
+    working_hour_end:{type:Number}
 });
 
 module.exports = mongoose.model("User", UserSchema);
