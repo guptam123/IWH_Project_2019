@@ -19,6 +19,8 @@ const UserSchema = new mongoose.Schema({
     following:{type:Array},//_ids of other users/companies/orgs followed by the user
     followedby:{type:Array},//ids of those who are following me
     experiences:{type:Array},//create post api will be used for this too.
+    jobsPosted:{type:Array},//_ids of jobs posted
+    jobsAppliedTo:{type:Array},//_ids of jobs applied to
 
 });
 

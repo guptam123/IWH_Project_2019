@@ -14,6 +14,7 @@ router.get('/about', function (req, res) {
 router.post('/:id/:type/post_create/',controller.post_create);//id is _id of the user/comp who creates the post
 router.get('/:aid/:user_dest/upvotepost', controller.upvotepost);
 router.post('/:id/:user_dest/add_comment', controller.add_comment);//here user_dest is the user who has written the post
+router.post('/:id/:type/post_job/',controller.post_job);//id is _id of the user/comp who posts the job
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

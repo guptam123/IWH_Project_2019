@@ -3,6 +3,7 @@ const Log = require('../models/log');
 const User=require('../models/user');
 const Company=require('../models/company');
 const Comment = require('../models/comment');
+const Job = require('../models/job');
 
 exports.post_create = function (req, res) {//call the same api for creating work experiences.
     if(req.file)
@@ -42,6 +43,67 @@ exports.post_create = function (req, res) {//call the same api for creating work
     {Company.updateOne({_id:id},{$push:{posts:post1._id}},function (err,user) {});}
 
 
+};
+
+exports.post_job= function (req , res) {
+    var id=req.params.id;//id of the creator
+    var type=req.params.type;//1 for user 2 for company
+    let job = new Job(
+        {   title: req.body.title,
+            madeby: id,
+            time:new Date(Date.now()).toTimeString(),//new time
+            date:new Date(Date.now()).toDateString(),//new date
+            jobtype:req.body.jobtype,
+            decription:req.body.description,
+            experience: req.body.experience,
+            startTime:req.body.starttime,
+            endTime:req.body.endtime
+
+        }
+    );
+    var tagString=req.body.tag;
+    var tags= tagString.split(",");
+    for(var i=0;i<tags.length;i++)
+    {job.tag.push(tags[i]);}
+
+    var domainString=req.body.domain;
+    var domains= domainString.split(",");
+    for(var i=0;i<domains.length;i++)
+    {job.domain.push(domains[i]);}
+
+    job.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.send('job posted successfully')
+    });
+
+    console.log(job._id);
+    if(type==1)
+    {User.updateOne({_id:id},{$push:{jobsPosted:job._id}},function (err,user) {});}
+    else if(type==2)
+    {Company.updateOne({_id:id},{$push:{jobsPosted:job._id}},function (err,user) {});}
+
+//////////////creating a new post(normal post) for this job
+    let post = new Post(
+        {   madeby: id,
+            posttype:1,
+            jobid:job._id,
+            time:job.time,
+            date:job.date
+
+        }
+    );
+
+    post.save(function (err) {
+        if (err) {return next(err);}
+        //res.send('post Created successfully')
+    });
+
+    if(type==1)
+    {User.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
+    else if(type==2)
+    {Company.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
 };
 
 exports.follow = function (req , res) {

@@ -8,6 +8,8 @@ const PostSchema = new mongoose.Schema({
     tag:{type:Array},
     time:String,
     date:String,
+    posttype:{type:Number , default:0},
+    jobid:String,/////to store ids of jobs posted
     //flag:{type:Boolean ,default:0},
     uploadfile:String
 });
