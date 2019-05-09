@@ -195,6 +195,7 @@ exports.follow = function (req , res) {
     let log= new Log(
         {
             item:logItem,
+            user_src: req.params.id1,
             user_dest: req.params.id2
         });
     log.save(function(err){
