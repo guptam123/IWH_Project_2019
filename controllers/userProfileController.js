@@ -125,6 +125,28 @@ exports.update_email= function (req , res) {
 /////////////////////////////////////////////////////////////////////////
 //write other APIs below
 //hire button api shows contact detail for that user.
+exports.hire_user=function(req,res)//hiring user dierctly(by company)
+{
+  var uid=req.params.uid;
+  var cid=req.params.cid;
+  User.find({_id:uid}).then(function(user){
+    res.send(user);
+  })
+  ////For notification
+  var logItem=req.params.cid + " Tried to click the hire button for " + req.params.uid;
+  let log= new Log(
+      {
+          item:logItem,
+          user_src:req.body.cid,
+          user_dest: req.params.uid
+      });
+  log.save(function(err){
+      if(err){
+          return next(err);
+      }
+  });
+}
+
 
 ////show users followed by me
 exports.following=function(req,res){
