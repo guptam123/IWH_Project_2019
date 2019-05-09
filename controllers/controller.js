@@ -144,6 +144,34 @@ exports.post_job= function (req , res) {
     ////2) apply --> user will directly apply for this job (API yet to be created)
 };
 
+
+exports.view_details_of_job = function (req , res) {
+    var id=req.params.id;//id of job to be viewed
+    Job.findById({_id:id}).then(function (job)
+    {res.send(job);});
+};
+
+exports.apply_for_job = function (req , res) {
+    var id1=req.params.id1;//id of person applying for job
+    var id2=req.params.id2;//id of job
+    //var type=req.params.type;
+
+    Job.updateOne({_id:id1},{$push:{appliedby:id2}},function (err,user) {
+
+        res.send(id1 + " applied for job "+id2);
+    });
+};
+
+exports.show_posts = function (req , res) {
+    var id = req.params.id;
+    // let temp=[];
+    Post.find({madeby: id}).sort({date: -1}).then(function (posts) {
+        res.send(posts);
+
+    });
+}
+
+
 exports.follow = function (req , res) {
     var id1=req.params.id1;
     var id2=req.params.id2;
@@ -177,15 +205,7 @@ exports.follow = function (req , res) {
 };
 
 
-exports.show_posts = function (req , res) {
-    Post.find({}).then(function (posts) {
-        res.send(posts);
-    });
-};
-/*exports.show_posts = function (req , res) {
-    res.send('postman is working')
-};
-*/
+
 //Direct searching of users
 exports.search_people = function(req,res){
     var searchitem = req.body.searchitem;
