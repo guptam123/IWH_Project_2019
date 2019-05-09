@@ -12,8 +12,8 @@ router.get('/about', function (req, res) {
 /////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to posts
 router.post('/:id/:type/post_create/',controller.post_create);//id is _id of the user/comp who creates the post
-router.get('/:aid/:name/upvotepost', controller.upvotepost);
-router.post('/:id/add_comment', controller.add_comment);
+router.get('/:aid/:user_dest/upvotepost', controller.upvotepost);
+router.post('/:id/:user_dest/add_comment', controller.add_comment);//here user_dest is the user who has written the post
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ router.post('/search/global_search',controller.global_search);
 
 
 //router.post('/:id/add_comment', controller.add_comment);
-
+router.get('/:user/notification',controller.notification);
 router.get('/show_posts', controller.show_posts);
 //router.get('/:uid/:aid/deletepost_user', controller.deletepost_user);
 

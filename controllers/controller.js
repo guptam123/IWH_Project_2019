@@ -48,7 +48,7 @@ exports.follow = function (req , res) {
     var id1=req.params.id1;
     var id2=req.params.id2;
     var type=req.params.type;
-    console.log("Working!");
+    //console.log("Working!");
     if(type==1)
     var type1=req.params.type1;
     var type2=req.params.type2;
@@ -66,7 +66,8 @@ exports.follow = function (req , res) {
     var logItem=req.params.id1 + " started following " + req.params.id2;
     let log= new Log(
         {
-            item:logItem
+            item:logItem,
+            user_dest: req.params.id2
         });
     log.save(function(err){
         if(err){
@@ -122,19 +123,22 @@ exports.global_search = function (req , res) {
     var searchitem=req.body.searchitem;
     var keywords=searchitem.split(" ");
     console.log(searchitem);
-    let data1=[];
-    let data2=[];
-    let data3=[];
+    var data1=[];
     Post.find({tag:{$in: keywords} }, function (err, post) {
         data1.push(post);
     });
     Company.find({name:{$in: keywords} },function(err, company) {
-        data2.push(company);
+        data1.push(company);
     });
     User.find({name:{$in: keywords} }, function (err, user) {
-        data3.push(user);
+        data1.push(user);
     });
-    res.send(data1,data2,data3);
+    var obj = { };
+    for (var key in data1) {
+        obj[key] = data1[key]
+    }
+    res.send(obj)
+    //res.send(data1);
 };
 
 /////////////////////////////////////////////Add Comment API//////////////////////////////////////////////////////////
@@ -156,7 +160,9 @@ exports.add_comment = function (req, res) {
     var logItem=req.body.user + " Commented on " + req.params.id;
     let log = new Log(
         {
-            item:logItem
+            item:logItem,
+            user_src:req.body.user,
+            user_dest: req.params.user_dest
         });
     log.save(function (err) {
         if (err) {
@@ -169,7 +175,8 @@ exports.add_comment = function (req, res) {
 ////////////////////////////////////////////////////Upvote API///////////////////////////////////////////////////////
 exports.upvotepost = function (req , res) {
     var aid=req.params.aid;
-    var name=req.params.name;
+    var user=req.body.user;
+    var user_dest=req.params.user_dest;
     Post.findById({_id:aid.toString()}, function(err,post)
     {
         Post.updateOne({_id:aid.toString()},{$set:{upvote:post.upvote+1}}, function(err, res)
@@ -182,10 +189,12 @@ exports.upvotepost = function (req , res) {
         post.upvote++;
         res.send(post);
     });
-    var logItem=req.params.name + " Upvoted on " + req.params.aid;
+    var logItem=req.params.user + " Upvoted on " + req.params.aid;
     let log= new Log(
         {
-            item:logItem
+            item:logItem,
+            user_src:req.body.user,
+            user_dest: req.params.user_dest
         });
     log.save(function(err){
         if(err){
@@ -193,3 +202,12 @@ exports.upvotepost = function (req , res) {
         }
     });
 };
+
+//////////Notifications
+exports.notification = function(req,res){
+    var user=req.params.user;
+    var data1=[ ];
+    Log.find({user_dest:{$in: user}}, function(err,logs){
+        res.send(logs);
+    })
+}
