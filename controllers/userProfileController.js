@@ -125,3 +125,50 @@ exports.update_email= function (req , res) {
 /////////////////////////////////////////////////////////////////////////
 //write other APIs below
 //hire button api shows contact detail for that user.
+
+////show users followed by me
+exports.following=function(req,res){
+  var id=req.params.uid;
+  User.find({_id:id},'following').then(function (User) {
+    res.send(User);
+  })
+}
+////show users following me
+exports.followedby=function(req,res){
+  var id=req.params.uid;
+  User.find({_id:id},'followedby').then(function (user) {
+    res.send(user);
+  })
+}
+
+//view profile of other users
+exports.view_profile_of_user=function(req,res){
+  var id1=req.params.uid;//id of user who is viewing other profiles
+  var id2=req.params.userid;//id of user jiski dekhni hai profile
+  User.find({_id:id2}).then(function(user){
+    res.send(user);
+  })
+}
+
+exports.view_profile_of_company=function(req,res){
+  var id1=req.params.uid;//id of user who is viewing other profiles
+  var id2=req.params.companyid;//id of user jiski dekhni hai profile
+  Company.find({_id:id2}).then(function(company){
+    res.send(company);
+  })
+}
+
+
+//// people you may know
+exports.people_you_may_know=function(req,res) {
+  var id=req.params.uid;
+  User.getUserById(id, function(err, user) {
+    User.find({_id:{$in: user.following }},function(err,user2)
+    {
+      res.send(user2);
+    })
+  })
+}
+
+////company of appropriate skills user must know where he can apply
+//////yet to be completed
