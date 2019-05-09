@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-//const Log = require('../models/log');
+const Log = require('../models/log');
 const User=require('../models/user');
 const Company=require('../models/company');
 const Comment = require('../models/comment');
@@ -47,6 +47,9 @@ exports.post_create = function (req, res) {//call the same api for creating work
 exports.follow = function (req , res) {
     var id1=req.params.id1;
     var id2=req.params.id2;
+    var type=req.params.type;
+    console.log("Working!");
+    if(type==1)
     var type1=req.params.type1;
     var type2=req.params.type2;
 
@@ -60,6 +63,16 @@ exports.follow = function (req , res) {
     else if(type2==2)
     {Company.updateOne({_id:id2},{$push:{followedby:id1}},function (err,user) {});}
     res.send(id1+" is following "+id2);
+    var logItem=req.params.id1 + " started following " + req.params.id2;
+    let log= new Log(
+        {
+            item:logItem
+        });
+    log.save(function(err){
+        if(err){
+            return next(err);
+        }
+    });
 };
 
 
@@ -140,23 +153,23 @@ exports.add_comment = function (req, res) {
         console.log('comment added successfully');
         res.send(comment);
     });
-    // var logItem=req.body.user + " Commented on " + req.params.id;
-    // let log = new Log(
-    //     {
-    //         item:logItem
-    //     });
-    // log.save(function (err) {
-    //     if (err) {
-    //         return next(err);
-    //     }
-    // })
+    var logItem=req.body.user + " Commented on " + req.params.id;
+    let log = new Log(
+        {
+            item:logItem
+        });
+    log.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+    });
 
 };
 
 ////////////////////////////////////////////////////Upvote API///////////////////////////////////////////////////////
 exports.upvotepost = function (req , res) {
     var aid=req.params.aid;
-    //var eid=req.params.eid;
+    var name=req.params.name;
     Post.findById({_id:aid.toString()}, function(err,post)
     {
         Post.updateOne({_id:aid.toString()},{$set:{upvote:post.upvote+1}}, function(err, res)
@@ -169,5 +182,14 @@ exports.upvotepost = function (req , res) {
         post.upvote++;
         res.send(post);
     });
-
+    var logItem=req.params.name + " Upvoted on " + req.params.aid;
+    let log= new Log(
+        {
+            item:logItem
+        });
+    log.save(function(err){
+        if(err){
+            return next(err);
+        }
+    });
 };

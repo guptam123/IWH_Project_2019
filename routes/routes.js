@@ -12,7 +12,7 @@ router.get('/about', function (req, res) {
 /////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to posts
 router.post('/:id/:type/post_create/',controller.post_create);//id is _id of the user/comp who creates the post
-router.get('/:aid/upvotepost', controller.upvotepost);
+router.get('/:aid/:name/upvotepost', controller.upvotepost);
 router.post('/:id/add_comment', controller.add_comment);
 //////////////////////////////////////////////////////////////////////////////////////////////
 
