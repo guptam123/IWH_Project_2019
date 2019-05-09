@@ -47,11 +47,18 @@ exports.post_create = function (req, res) {//call the same api for creating work
 exports.follow = function (req , res) {
     var id1=req.params.id1;
     var id2=req.params.id2;
-    var type=req.params.type;
-    if(type==1)
+    var type1=req.params.type1;
+    var type2=req.params.type2;
+
+    if(type1==1)
     {User.updateOne({_id:id1},{$push:{following:id2}},function (err,user) {});}
-    else if(type==2)
+    else if(type1==2)
     {Company.updateOne({_id:id1},{$push:{following:id2}},function (err,user) {});}
+
+    if(type2==1)
+    {User.updateOne({_id:id2},{$push:{followedby:id1}},function (err,user) {});}
+    else if(type2==2)
+    {Company.updateOne({_id:id2},{$push:{followedby:id1}},function (err,user) {});}
     res.send(id1+" is following "+id2);
 };
 

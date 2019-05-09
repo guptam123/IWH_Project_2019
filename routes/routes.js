@@ -18,8 +18,9 @@ router.post('/:id/add_comment', controller.add_comment);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to 'follow'
-router.post('/:id1/:id2/:type/follow/',controller.follow);
-//id1-->follower._id , id2-->followed._id , type--> 1(2) if follower is a user(company)
+router.post('/:id1/:id2/:type1/:type2/follow/',controller.follow);
+//id1-->follower._id , id2-->followed._id , type1--> 1(2) if follower is a user(company)
+//                                          type2--> 1(2) if user(company) is being followed
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////
