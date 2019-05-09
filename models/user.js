@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
     working_hour_end:Number,
     posts:{type:Array},//post ids created by the user will be stored in this array
     following:{type:Array},//_ids of other users/companies/orgs followed by the user
+    followedby:{type:Array},//ids of those who are following me
     experiences:{type:Array},//create post api will be used for this too.
 
 });
