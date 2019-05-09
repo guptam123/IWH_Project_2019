@@ -129,5 +129,15 @@ exports.company_you_may_know=function(req,res) {
     })
 }
 
-//users of particular skills company must know
-/////yet not completed
+//User of particular skills company must know
+const User=require('../models/user');
+
+exports.user_recommended=function(req,res){
+    var id=req.params.cid;
+    Company.getCompanyById(id, function(err, company) {
+        User.find({skills:{$in: company.domains}},function(err,user)
+        {
+            res.send(user);
+        })
+    })
+}

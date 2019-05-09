@@ -171,4 +171,13 @@ exports.people_you_may_know=function(req,res) {
 }
 
 ////company of appropriate skills user must know where he can apply
-//////yet to be completed
+
+exports.company_recommended=function(req,res){
+  var id=req.params.uid;
+  User.getUserById(id, function(err, user) {
+    Job.find({domain:{$in: user.skills}},function(err,company)
+    {
+      res.send(company);
+    })
+  })
+}

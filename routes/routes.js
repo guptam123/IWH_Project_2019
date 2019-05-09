@@ -69,7 +69,7 @@ router.post('/:cid/update_Companyemail/', companyProfileController.update_email)
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-///////////////////following and followed by api end points
+///////////////////following and followed by api end points///////////////////////////////
 router.post('/:uid/show_users_followed_by_user/',userProfileController.following);
 router.post('/:uid/show_users_following_user/',userProfileController.followedby);
 
@@ -77,7 +77,7 @@ router.post('/:uid/show_users_following_user/',userProfileController.followedby)
 router.post('/:cid/show_company_followed_by_user/',companyProfileController.following);
 router.post('/:cid/show_company_following_user/',companyProfileController.followedby);
 
-////////////////////// view profile of other users  and company end points
+////////////////////// view profile of other users  and company end points//////////////////////
 router.post('/:uid/:userid/view_profile_of_user/',userProfileController.view_profile_of_user);
 router.post('/:uid/:companyid/view_profile_of_company/',userProfileController.view_profile_of_company);
 
@@ -85,9 +85,19 @@ router.post('/:uid/:companyid/view_profile_of_company/',userProfileController.vi
 router.post('/:cid/:userid/view_profile_of_user/',companyProfileController.view_profile_of_user);
 router.post('/:cid/:companyid/view_profile_of_company/',companyProfileController.view_profile_of_company);
 
-///////////////////////people you may know api endpoints
+
+
+///////////////////////people you may know api endpoints///////////////////////////////////
 router.post('/:uid/people_you_may_know/',userProfileController.people_you_may_know);
 
 router.post('/:cid/company_you_may_know/',companyProfileController.company_you_may_know);
+
+
+
+//////////////////////////recommendations of jobs an users API end points////////////////////
+router.post('/:uid/company_recommended/',userProfileController.company_recommended);
+
+router.post('/:cid/user_recommended/',companyProfileController.user_recommended);
+
 
 module.exports = router;
