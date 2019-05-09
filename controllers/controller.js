@@ -85,25 +85,63 @@ exports.post_job= function (req , res) {
     {Company.updateOne({_id:id},{$push:{jobsPosted:job._id}},function (err,user) {});}
 
 //////////////creating a new post(normal post) for this job
-    let post = new Post(
-        {   madeby: id,
-            posttype:1,
-            jobid:job._id,
-            time:job.time,
-            date:job.date
-
-        }
-    );
-
-    post.save(function (err) {
-        if (err) {return next(err);}
-        //res.send('post Created successfully')
-    });
 
     if(type==1)
-    {User.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
-    else if(type==2)
-    {Company.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
+    {
+        User.findById({_id: id}).then(function (user) {
+            let post = new Post(
+                {   content:user.name+" is hiring for "+job.title + " post",
+                    madeby: id,
+                    posttype:1,
+                    jobid:job._id,
+                    time:job.time,
+                    date:job.date
+
+                }
+            );
+
+            post.save(function (err) {
+                if (err) {return next(err);}
+                //res.send('post Created successfully')
+            });
+
+            if(type==1)
+            {User.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
+            else if(type==2)
+            {Company.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
+        });
+    }
+
+    if(type==2)
+    {
+        Company.findById({_id: id},).then(function (company) {
+            let post = new Post(
+                {   content:company.name+" is hiring for "+job.title + " post",
+                    madeby: id,
+                    posttype:1,
+                    jobid:job._id,
+                    time:job.time,
+                    date:job.date
+
+                }
+            );
+            post.save(function (err) {
+                if (err) {return next(err);}
+                //res.send('post Created successfully')
+            });
+
+            if(type==1)
+            {User.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
+            else if(type==2)
+            {Company.updateOne({_id:id},{$push:{posts:post._id}},function (err,user) {});}
+
+
+        });
+    }
+
+    ////there will be two buttons
+    ////1) view details --> will show the details of job._id (API yet to be created)
+    ////2) apply --> user will directly apply for this job (API yet to be created)
 };
 
 exports.follow = function (req , res) {
