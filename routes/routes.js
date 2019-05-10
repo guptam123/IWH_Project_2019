@@ -17,7 +17,7 @@ router.post('/:id/:user_dest/add_comment', controller.add_comment);//here user_d
 router.post('/:id/:type/post_job/',controller.post_job);//id is _id of the user/comp who posts the job
 router.post('/:id/:type/post_job/',controller.post_job);//id is _id of the user/comp who posts the job
 router.post('/:id/show_posts/',controller.show_posts);//id is _id of the user/comp whose posts we wish to see
-router.post('/:id1/:id2/apply_for_job',controller.apply_for__job);//id1 --> person applying for job id2-->job
+router.post('/:id1/:id2/apply_for_job',controller.apply_for_job);//id1 --> person applying for job id2-->job
 router.post('/:id/view_details_of_job/',controller.view_details_of_job);//id--> job to be viewed
 
 
@@ -95,14 +95,12 @@ router.post('/:cid/:companyid/view_profile_of_company/',companyProfileController
 
 ///////////////////////people you may know api endpoints///////////////////////////////////
 router.post('/:uid/people_you_may_know/',userProfileController.people_you_may_know);
-
 router.post('/:cid/company_you_may_know/',companyProfileController.company_you_may_know);
 
 
 
 //////////////////////////recommendations of jobs an users API end points////////////////////
 router.post('/:uid/company_recommended/',userProfileController.company_recommended);
-
 router.post('/:cid/user_recommended/',companyProfileController.user_recommended);
 
 

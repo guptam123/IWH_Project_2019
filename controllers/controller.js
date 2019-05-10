@@ -140,8 +140,8 @@ exports.post_job= function (req , res) {
     }
 
     ////there will be two buttons
-    ////1) view details --> will show the details of job._id (API yet to be created)
-    ////2) apply --> user will directly apply for this job (API yet to be created)
+    ////1) view details --> will show the details of job._id (API yet to be created)///done
+    ////2) apply --> user will directly apply for this job (API yet to be created)////done
 };
 
 
