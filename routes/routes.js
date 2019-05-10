@@ -96,14 +96,12 @@ router.post('/:cid/:companyid/view_profile_of_company/',companyProfileController
 
 ///////////////////////people you may know api endpoints///////////////////////////////////
 router.post('/:uid/people_you_may_know/',userProfileController.people_you_may_know);
-
 router.post('/:cid/company_you_may_know/',companyProfileController.company_you_may_know);
 
 
 
 //////////////////////////recommendations of jobs an users API end points////////////////////
 router.post('/:uid/company_recommended/',userProfileController.company_recommended);
-
 router.post('/:cid/user_recommended/',companyProfileController.user_recommended);
 
 
