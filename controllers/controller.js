@@ -160,6 +160,21 @@ exports.apply_for_job = function (req , res) {
 
         res.send(id1 + " applied for job "+id2);
     });
+    var logItem=req.params.id1 + " applied for job " + req.params.id2;
+    Job.findById(req.params.id2,function(err,job){
+        //console.log(job);
+        let log= new Log(
+        {
+            item:logItem,
+            user_src: req.params.id1,
+            user_dest: job.madeby
+        });
+    log.save(function(err){
+        if(err){
+            return next(err);
+        }
+    });
+    });
 };
 
 exports.show_posts = function (req , res) {
@@ -327,7 +342,6 @@ exports.upvotepost = function (req , res) {
 //////////Notifications
 exports.notification = function(req,res){
     var user=req.params.user;
-    var data1=[ ];
     Log.find({user_dest:{$in: user}}, function(err,logs){
         res.send(logs);
     })

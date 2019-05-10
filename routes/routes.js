@@ -15,7 +15,7 @@ router.post('/:id/:type/post_create/',controller.post_create);//id is _id of the
 router.get('/:aid/:user_dest/upvotepost', controller.upvotepost);
 router.post('/:id/:user_dest/add_comment', controller.add_comment);//here user_dest is the user who has written the post
 router.post('/:id/:type/post_job/',controller.post_job);//id is _id of the user/comp who posts the job
-router.post('/:id/:type/post_job/',controller.post_job);//id is _id of the user/comp who posts the job
+//router.post('/:id/:type/post_job/',controller.post_job);//id is _id of the user/comp who posts the job
 router.post('/:id/show_posts/',controller.show_posts);//id is _id of the user/comp whose posts we wish to see
 router.post('/:id1/:id2/apply_for_job',controller.apply_for_job);//id1 --> person applying for job id2-->job
 router.post('/:id/view_details_of_job/',controller.view_details_of_job);//id--> job to be viewed
