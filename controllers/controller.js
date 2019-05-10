@@ -77,7 +77,44 @@ exports.post_job= function (req , res) {
         }
         res.send('job posted successfully')
     });
-
+    if(type==1){
+        User.findById(req.params.id,function(err,user){
+            var f=user.followedby;
+            for(var i=0;i<f.length;i++){
+                var logItem=req.params.id + " posted for a new job " + job._id;
+                let log= new Log(
+                    {
+                        item:logItem,
+                        user_src: req.params.id,
+                        user_dest: f[i]
+                    });
+                log.save(function(err){
+                    if(err){
+                        return next(err);
+                    }
+                });
+            }
+        })
+    }
+    else if(type==2){
+        Company.findById(req.params.id,function(err,company){
+            var f=company.followedby;
+            for(var i=0;i<f.length;i++){
+                var logItem=req.params.id + " posted for a new job " + job._id;
+                let log= new Log(
+                    {
+                        item:logItem,
+                        user_src: req.params.id,
+                        user_dest: f[i]
+                    });
+                log.save(function(err){
+                    if(err){
+                        return next(err);
+                    }
+                });
+            }
+        })   
+    }
     console.log(job._id);
     if(type==1)
     {User.updateOne({_id:id},{$push:{jobsPosted:job._id}},function (err,user) {});}
@@ -138,7 +175,6 @@ exports.post_job= function (req , res) {
 
         });
     }
-
     ////there will be two buttons
     ////1) view details --> will show the details of job._id (API yet to be created)
     ////2) apply --> user will directly apply for this job (API yet to be created)
