@@ -58,7 +58,8 @@ router.post('/:uid/update_email/', userProfileController.update_email);
 router.post('/:uid/working_hour_start/', userProfileController.update_working_hour_start);
 router.post('/:uid/working_hour_end/', userProfileController.update_working_hour_end);
 ////////////////////////////////////////////////////////////////////////////////////////////////
-
+/////API endpoint for user profile as seen by company/////////
+router.get('/:uid/:cid/hire_user',userProfileController.hire_user);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /////API endpoints for company profile as seen by user
