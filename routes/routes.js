@@ -5,9 +5,12 @@ const router = express.Router();
 const controller = require('../controllers/controller');
 const userProfileController= require('../controllers/userProfileController');
 const companyProfileController= require('../controllers/companyProfileController');
+
 router.get('/about', function (req, res) {
     res.send('Welocme to ABC');
   });
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to posts
@@ -103,6 +106,10 @@ router.post('/:cid/company_you_may_know/',companyProfileController.company_you_m
 //////////////////////////recommendations of jobs an users API end points////////////////////
 router.post('/:uid/company_recommended/',userProfileController.company_recommended);
 router.post('/:cid/user_recommended/',companyProfileController.user_recommended);
+
+
+
+
 
 
 module.exports = router;

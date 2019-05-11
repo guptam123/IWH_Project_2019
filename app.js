@@ -8,12 +8,14 @@ const LocalStrategy = require('passport-local').Strategy;
 const cookieParser=require('cookie-parser'); //for storing cookies
 const expressValidator = require('express-validator'); //for checkBody function
 var app = express();
+
+
 app.get('/', (req, res) => {
     res.send('Hello Express')
 });
 
 
-// Set up mongoose connection
+///Set up mongoose connection
 const mongoose = require('mongoose');
 let dev_db_url = 'mongodb+srv://arcade:4mlabACC@firstcluster-yc1pt.mongodb.net/virago?retryWrites=true';
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
@@ -64,9 +66,9 @@ app.use(expressValidator({
 app.use(cookieParser());
 
 
-
-
 let port = process.env.PORT || 1235;
 app.listen(port, () => {
     console.log('Server is up and running on port number ' + port);
 });
+
+
