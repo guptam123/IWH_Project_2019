@@ -1,6 +1,6 @@
 //const Post = require('../models/post');
 const User=require('../models/user');
-
+const Log=require('../models/log');
 
 ///////to edit everything//////
 //////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ exports.hire_user=function(req,res)//hiring user dierctly(by company)
   let log= new Log(
       {
           item:logItem,
-          user_src:req.body.cid,
+          user_src:req.params.cid,
           user_dest: req.params.uid
       });
   log.save(function(err){
@@ -146,7 +146,30 @@ exports.hire_user=function(req,res)//hiring user dierctly(by company)
       }
   });
 }
+////////////User wants to request fund from NGO/////////////
+////////////Request fund is a button on NGO profile////////
+//////////NGO is company with type=3///////////////////
+exports.request_fund=function(req,res)
+{
+  var nid=req.params.nid;
+  var uid=req.params.uid;
+  User.find({_id:uid}).then(function(user){
+    res.send(user);
+  })
+  var logItem=req.params.uid + " is requesting funds from " + req.params.nid;
+  let log= new Log(
+      {
+          item:logItem,
+          user_src:req.params.uid,
+          user_dest: req.params.nid
+      });
+  log.save(function(err){
+      if(err){
+          return next(err);
+      }
+  });
 
+}
 
 ////show users followed by me
 exports.following=function(req,res){

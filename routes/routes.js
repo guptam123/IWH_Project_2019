@@ -64,7 +64,8 @@ router.post('/:uid/working_hour_end/', userProfileController.update_working_hour
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /////API endpoint for user profile as seen by company/////////
 router.get('/:uid/:cid/hire_user',userProfileController.hire_user);
-
+//////////API endpoint for NGO profile as seen by user///////
+router.get('/:nid/:uid/request_fund',userProfileController.request_fund);
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /////API endpoints for company profile as seen by user
 router.post('/:cid/update_add_domain/', companyProfileController.update_add_domain);
