@@ -26,6 +26,7 @@ router.post('/:id/view_details_of_job/',controller.view_details_of_job);//id--> 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to 'follow'
 router.post('/:id1/:id2/:type1/:type2/follow/',controller.follow);
@@ -44,7 +45,7 @@ router.post('/search/global_search',controller.global_search);
 
 //router.post('/:id/add_comment', controller.add_comment);
 router.get('/:user/notification',controller.notification);
-router.get('/show_posts', controller.show_posts);
+router.get('/:uid/show_posts', controller.show_posts);
 //router.get('/:uid/:aid/deletepost_user', controller.deletepost_user);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
