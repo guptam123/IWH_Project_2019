@@ -1,7 +1,7 @@
 //const Post = require('../models/post');
 const Company=require('../models/company');
-
-
+const User=require('../models/user');
+const Log=require('../models/log');
 ///////to edit everything//////
 //////////////////////////////////////////////////////////////////////////
 
@@ -83,10 +83,49 @@ exports.update_email= function (req , res) {
         res.send("email id changed to "+email);
     });
 };
+/////Send connection request to company (by a user)
+exports.send_follow_request=function(req,res)
+{
+  var cid=req.params.uid;
+  var uid=req.params.cid;
+  var logItem=req.params.uid + " wants to follow " + req.params.cid;
+  res.send(logItem);
+  let log= new Log(
+      {
+          item:logItem,
+          user_src:req.params.uid,
+          user_dest: req.params.cid
+      });
+  log.save(function(err){
+      if(err){
+          return next(err);
+      }
+  });
+}
+/////Here user wants to follow company
+////if company clicks accept_connection button----->use controller.follow api
 
+///////if company clicks reject_connection button
+exports.reject_connection=function(req,res)
+{
+  var cid=req.params.cid;
+  var uid=req.params.uid;
+  var logItem=req.params.cid + " rejected your connection request " + req.params.uid;
+  res.send(logItem);
+  let log= new Log(
+      {
+          item:logItem,
+          user_src:req.params.cid,
+          user_dest: req.params.uid
+      });
+  log.save(function(err){
+      if(err){
+          return next(err);
+      }
+  });
+}
 /////////////////////////////////////////////////////////////////////////
 //write other APIs below
-//hire button api shows contact detail for that user.
 ////show users followed by me
 exports.following=function(req,res){
     var id=req.params.cid;
@@ -130,7 +169,6 @@ exports.company_you_may_know=function(req,res) {
 }
 
 //User of particular skills company must know
-const User=require('../models/user');
 
 exports.user_recommended=function(req,res){
     var id=req.params.cid;

@@ -29,11 +29,16 @@ router.post('/:id/view_details_of_job/',controller.view_details_of_job);//id--> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //API endpoints related to 'follow'
+///Sending follow request
+router.post('/:uid/:cid/send_follow_request/',companyProfileController.send_follow_request);
+//API for accept_connection request is follow api below
+
 router.post('/:id1/:id2/:type1/:type2/follow/',controller.follow);
 //id1-->follower._id , id2-->followed._id , type1--> 1(2) if follower is a user(company)
 //                                          type2--> 1(2) if user(company) is being followed
 ////////////////////////////////////////////////////////////////////////////////////////////////
-
+//API for reject_connection
+router.post('/:uid/:cid/reject_connection/',companyProfileController.reject_connection);
 //////////////////////////////////////////////////////////////////////////////////////////////
 //search API endpoints
 router.post('/search/people',controller.search_people);
