@@ -9,8 +9,8 @@ const upload = multer({dest: './uploads'});//upload variable for storing profile
 const controller = require('../controllers/controller_register');
 
 
-router.post('/:type/register/', upload.single('profileimage'),controller.register);// post api ,image variable:profileimage
-
+//router.post('/:type/register/', upload.single('profileimage'),controller.register);// post api ,image variable:profileimage
+router.post('/:type/register/', upload.single('profileimage'),controller.validate('register'),controller.register);// post api ,image variable:profileimage
 //for sessions
 router.post('/:type/login/',controller.login);
 passport.serializeUser(function(user, done) {

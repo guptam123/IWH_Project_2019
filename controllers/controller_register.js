@@ -5,6 +5,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');//User collection with user.js schema
 var Company = require('../models/company');//Company collection with company.js schema
+const { check, validationResult } = require('express-validator/check');
 
 //LOGIN FUNCTION
 
@@ -92,7 +93,149 @@ exports.login=function(req, res) {
 
 
 //REGISTER FUNCTION
+exports.validate = (method) => {
+//var type= req.params.type;
 
+    switch (method) {
+
+        case 'register': {
+            return [
+                check('name', 'name required').not().isEmpty(),
+                check('city', 'city required').not().isEmpty(),
+                check('country', 'country required').not().isEmpty(),
+                check('email', 'email required').not().isEmpty(),
+                check('email', 'Invalid email').isEmail(),
+                check('password', 'password required').not().isEmpty(),
+                check('password2', 'retype password').not().isEmpty(),
+
+
+            ]
+        }
+    }
+
+}
+
+exports.register = (req, res, next) => {
+    var c = 0;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        c = 1;
+        res.send(errors.array().map(x => `${x.msg}`));
+        return;
+
+    }
+
+    var type = req.params.type;
+    var name = req.body.name;
+    var city = req.body.city;
+    var country = req.body.country;
+    var email = req.body.email;
+    var password = req.body.password;
+    var password2 = req.body.password2;
+    var skillString = req.body.skills;
+    var domainString = req.body.domains;
+
+    if (req.file) {
+        console.log('Uploading File...');
+        var profileimage = req.file.filename;
+    } else {
+        console.log('No File Uploaded...');
+        var profileimage = 'noimage.jpg';
+    }
+
+    if(type==1){
+        User.findOne({email: req.body.email}, function (err, user) {//to check if email is already present in database
+
+            //if a user was found, that means the user's email matches the entered email
+            if (user) {
+                c = 1;
+                console.log('invalid email');
+                res.send('email already registered.');
+                return;
+            } else {
+                var newUser = new User({
+                    name: name,
+                    email: email,
+                    city: city,
+                    country: country,
+                    password: password,
+                    profileimage: profileimage
+                });
+
+                if(skillString==null){res.send('enter skills');return;}
+                else {
+                    var skill = skillString.split(",");
+                    for (var i = 0; i < skill.length; i++) {//console.log(skill[i]+"\n");
+                        newUser.skills.push(skill[i]);
+                    }
+                    if(password!=password2){
+                        res.send('passwords donot match');return;
+                    }
+                    else{User.createUser(newUser, function (err, user) {//Create user function is defined in user.js, it encrypts the password and stores it in db
+                        if (err) {
+                            res.send(err);
+                        }
+                        res.send(user);
+                        return;
+
+                    });}
+
+
+                }
+            }
+
+
+        });
+    }
+
+    if(type==2){
+        Company.findOne({email: req.body.email}, function (err, user) {//to check if email is already present in database
+
+            //if a user was found, that means the user's email matches the entered email
+            if (user) {
+                c = 1;
+                console.log('invalid email');
+                res.send('email already registered.');
+                return;
+            } else {
+                var newCompany = new Company({
+                    name: name,
+                    email: email,
+                    city: city,
+                    country: country,
+                    password: password,
+                    profileimage: profileimage
+                });
+
+                if(domainString==null){res.send('enter domains');return;}
+                else {
+                    var domain = domainString.split(",");
+                    for (var i = 0; i < domain.length; i++) {//console.log(skill[i]+"\n");
+                        newCompany.domains.push(domain[i]);
+                    }
+                    if(password!=password2){
+                        res.send('passwords donot match');return;
+                    }
+                    else{Company.createCompany(newCompany, function (err, user) {//Create user function is defined in user.js, it encrypts the password and stores it in db
+                        if (err) {
+                            res.send(err);
+                        }
+                        res.send(user);
+                        return;
+
+                    });}
+
+
+                }
+            }
+
+
+        });
+    }
+}
+
+
+/*
 exports.register=function(req, res, next) {
     var type=req.params.type;
     var name = req.body.name;
@@ -219,7 +362,7 @@ exports.register=function(req, res, next) {
             });
         }
     }
-}
+}*/
 
 //LOGOUT FUNCTION
 exports.logout=function(req, res){

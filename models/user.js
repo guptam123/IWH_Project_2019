@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     phone: {type:Number, default: 0},
     email:String,
     password:String,
-    skills:{type:Array},
+    skills:{type:Array,sparse:true,unique:false},
     //flag:{type:Boolean ,default:0},
     qualifications:{type:Array},
     working_hour_start:Number,
