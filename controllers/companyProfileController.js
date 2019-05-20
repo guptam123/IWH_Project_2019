@@ -110,7 +110,7 @@ exports.reject_connection=function(req,res)
 {
   var cid=req.params.cid;
   var uid=req.params.uid;
-  var logItem=req.params.cid + " rejected your connection request " + req.params.uid + "tcho tcho tcho";
+  var logItem=req.params.cid + " rejected your connection request " + req.params.uid;
   res.send(logItem);
   let log= new Log(
       {
