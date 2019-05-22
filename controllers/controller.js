@@ -1,4 +1,4 @@
-const Post = require('../models/post');
+const Post = require('../models/Post');
 const Log = require('../models/log');
 const User=require('../models/user');
 const Company=require('../models/company');
@@ -113,7 +113,7 @@ exports.post_job= function (req , res) {
                     }
                 });
             }
-        })   
+        })
     }
     console.log(job._id);
     if(type==1)
@@ -290,7 +290,7 @@ exports.search_post = function (req , res) {
 };
 
 //can search globally i.e. finding a user, company, post tag containing a keyword
-//NOT COMPLETED YET!! 
+//NOT COMPLETED YET!!
 exports.global_search = function (req , res) {
     var searchitem=req.body.searchitem;
     var keywords=searchitem.split(" ");
